@@ -34,7 +34,7 @@ const database = {
 ✔️--> / = response > success
 ✔️--> /signin = POST > sucess/fail
 ✔️--> /register = POST > user
---> /profile/:userId = GET > user
+✔️--> /profile/:userId = GET > user
 --> /image = PUT > user
 */
 
@@ -65,6 +65,23 @@ app.post('/register', (req, res) => {
     });
 
     res.json(database.users[database.users.length-1]);
+});
+
+
+app.get('/profile/:id', (req, res) => {
+    const { id } = req.params;
+    let found = false;
+
+    database.users.forEach(user => {
+        if(user.id === id){
+            found = true;
+            return res.json(user);
+        }
+    });
+
+    if(!found) {
+        res.status(400).json('User Not Found');
+    }
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
