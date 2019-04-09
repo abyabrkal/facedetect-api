@@ -29,15 +29,6 @@ const database = {
 }
 
 // *************   ROUTES     ***************************** 
-/*
-# :TODO
-✔️--> / = response > success
-✔️--> /signin = POST > sucess/fail
-✔️--> /register = POST > user
-✔️--> /profile/:userId = GET > user
---> /image = PUT > user
-*/
-
 
 app.get('/', (req,res) => res.send(database.users));
 
@@ -83,6 +74,25 @@ app.get('/profile/:id', (req, res) => {
         res.status(400).json('User Not Found');
     }
 });
+
+
+app.put('/image', (req, res) => {
+    const { id } = req.body;
+    let found = false;
+
+    database.users.forEach(user => {
+        if(user.id === id){
+            found = true;
+            user.entries++;
+            return res.json(user.entries);
+        }
+    });
+
+    if(!found) {
+        res.status(400).json('User Not Found');
+    }
+});
+
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
 
