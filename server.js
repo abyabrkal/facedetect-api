@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt-nodejs');
 
 
 const app = express();
@@ -34,6 +35,15 @@ app.get('/', (req,res) => res.send(database.users));
 
 
 app.post('/signin', (req, res) => {
+
+    bcrypt.compare("bacon", hash, function(err, res) {
+        console.log(res);
+    });
+    bcrypt.compare("veggies", hash, function(err, res) {
+        console.log(res);
+    });
+
+
     if(req.body.email === database.users[0].email &&
         req.body.password === database.users[0].password){
             res.json('success');
@@ -45,6 +55,10 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
     const { name, email, password } = req.body;
+
+    bcrypt.hash(password, null, null, function(err, hash) {
+        console.log(hash);
+    });
 
     database.users.push({
         id: '125',
@@ -92,6 +106,14 @@ app.put('/image', (req, res) => {
         res.status(400).json('User Not Found');
     }
 });
+
+
+// BCRYPT - password encryption
+
+
+// Load hash from your password DB.
+
+
 
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));
