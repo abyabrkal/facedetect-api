@@ -38,12 +38,12 @@ app.get('/', (req,res) => res.send(database.users));
 
 app.post('/signin', (req, res) => {
 
-    bcrypt.compare("bacon", hash, function(err, res) {
-        console.log(res);
-    });
-    bcrypt.compare("veggies", hash, function(err, res) {
-        console.log(res);
-    });
+    // bcrypt.compare("bacon", hash, function(err, res) {
+    //     console.log(res);
+    // });
+    // bcrypt.compare("veggies", hash, function(err, res) {
+    //     console.log(res);
+    // });
 
 
     if(req.body.email === database.users[0].email &&
